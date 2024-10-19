@@ -1,2 +1,2 @@
 # Loterias Web
-Aplicação Web para consulta dos resultados das loterias da Caixa Econômica Federal.
+Software web para consulta dos resultados das loterias da Caixa Econômica Federal.

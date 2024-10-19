@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:web="http://xmlns.jcp.org.xml/ns/javaee"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+         	                 https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd
+         	                 http://xmlns.jcp.org/xml/ns/javaee
+         	                 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         metadata-complete="true"
+         version="5.0">
+  
+  <!-- App Display Name -->
+  <display-name>Loterias Web</display-name>
+  
+  <!-- App Description -->
+  <description>Aplicação para consulta de informações sobre as loterias.</description>
+  
+  <!-- State Saving Method -->
+  <context-param>
+    <description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
+    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+    <param-value>server</param-value>
+  </context-param>
+  
+  <!-- Path Config Files -->
+  <context-param>
+    <param-name>javax.faces.CONFIG_FILES</param-name>
+    <param-value>WEB-INF/faces-config.xml</param-value>
+  </context-param>
+  
+  <!-- Stage Project -->
+  <context-param>
+  	<param-name>javax.faces.PROJECT_STAGE</param-name>
+  	<param-value>Development</param-value>
+  </context-param>
+  
+  <!-- Faces Servlet Mapping -->
+  <servlet>
+  	<servlet-name>Faces Servlet</servlet-name>
+  	<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+  	<load-on-startup>1</load-on-startup>
+  </servlet>  
+  <servlet-mapping>
+  	<servlet-name>Faces Servlet</servlet-name>
+  	<url-pattern>*.xhtml</url-pattern>
+  </servlet-mapping>
+  
+  <!-- LoteriasServlet Mapping -->
+  <servlet>
+    <servlet-name>LoteriasServlet</servlet-name>
+    <servlet-class>br.com.loteriasweb.servlets.loterias.LoteriasServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoteriasServlet</servlet-name>
+    <url-pattern>/loterias</url-pattern>
+  </servlet-mapping>
+  
+  <!-- Welcome Files Mapping -->
+  <welcome-file-list>
+  	<welcome-file>loterias</welcome-file>
+  </welcome-file-list>
+  
+  <!-- Errors Mapping -->
+  <error-page>
+  	<error-code>400</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>401</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>402</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>403</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>405</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>406</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>407</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>408</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>409</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>410</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>411</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>412</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>413</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>414</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>415</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>416</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>417</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>418</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>421</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>422</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>423</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>424</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>425</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>426</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>428</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>429</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>431</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>451</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>500</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>501</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>502</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>503</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>504</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>505</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>506</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>507</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>508</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>510</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  <error-page>
+  	<error-code>511</error-code>
+  	<location>/pages/error/error.xhtml</location>
+  </error-page>
+  
+  <!-- App Listener Mapping -->
+  <listener>
+    <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+  </listener>
+  
+</web-app>

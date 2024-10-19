@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                        http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd"
+    version="2.3">
+    
+    <!-- App Config Locale -->
+    <application>
+    	<locale-config>
+    		<default-locale>pt_BR</default-locale>
+    		<supported-locale>pt_BR</supported-locale>
+    	</locale-config>
+    </application>
+    
+    <!-- Custom Exception Handling Class -->
+    <factory>
+    	<exception-handler-factory>br.com.loteriasweb.exception.CustomExceptionHandlerFactory</exception-handler-factory>
+    </factory>
+	
+	<!-- View Bean HomeBean -->
+	<managed-bean>
+		<managed-bean-name>loteriaBean</managed-bean-name>
+		<managed-bean-class>br.com.loteriasweb.bean.LoteriaBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<!-- Application Bean ConsultarLoteriaServiceImpl -->
+	<managed-bean>
+		<managed-bean-name>consultarLoteriaService</managed-bean-name>
+		<managed-bean-class>br.com.loteriasweb.service.impl.ConsultarLoteriaServiceImpl</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+	</managed-bean>
+	
+	<!-- Application Bean ConnectUtilsImpl -->
+	<managed-bean>
+		<managed-bean-name>connectUtils</managed-bean-name>
+		<managed-bean-class>br.com.loteriasweb.utils.impl.ConnectUtilsImpl</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+	</managed-bean>
+	
+	<!-- Application Bean BundleImpl -->
+	<managed-bean>
+		<managed-bean-name>bundle</managed-bean-name>
+		<managed-bean-class>br.com.loteriasweb.domain.impl.BundleImpl</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+	</managed-bean>
+	
+	<!-- Application Bean UtilsImpl -->
+	<managed-bean>
+		<managed-bean-name>utils</managed-bean-name>
+		<managed-bean-class>br.com.loteriasweb.utils.impl.UtilsImpl</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+	</managed-bean>
+	
+</faces-config>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.js" type="text/javascript"></script>
+		<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css" rel="stylesheet"/>
+		<link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/icon.ico"/>
+		<link type="text/css" href="#{request.contextPath}/includes/css/style.css" rel="stylesheet"/>
+		<script src="#{request.contextPath}/includes/js/script.js" type="text/javascript"></script>
+		<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate, max-age=0"/>
+		<title><ui:insert name="title">Loterias Web - Loterias</ui:insert></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+		<meta http-equiv="pragma" content="no-cache"/>
+		<meta charset="UTF-8"/>
+	</h:head>
+	<h:body>
+		<f:metadata>
+            <f:viewAction action="#{loteriaBean.init}"/>
+        </f:metadata>
+		<div class="data">
+			<ui:insert name="content">
+				<h:form id="frmResultadosLoterias">
+					<div class="wrapperConsulta">
+						<div class="formContainerConsulta">
+							<div class="headingConsulta">
+								<h1>Resultado das Loterias</h1>
+							</div>
+							<div class="formWrapConsulta">
+								<div class="formItemConsulta" style="text-align: justify;">
+									<p:carousel value="#{loteriaBean.listaResultados}" var="resultados"
+										numVisible="3" numScroll="3" responsiveOptions="#{loteriaBean.listaRespOptions}">
+										<div class="lottery-single">
+											<div class="lottery-result">
+												<div class="headingCard">
+													<h2>#{resultados.loteria}</h2>
+													<h4>Concurso #{resultados.concurso} | #{resultados.data}</h4>
+													<h4>#{resultados.strAcumulou}</h4>
+												</div>
+												<div class="linha"></div>
+												<ui:repeat value="#{resultados.dezenasOrdemSorteio}" var="dezenas">
+													<div class="lottery-number #{resultados.backcolorLoterias}">
+														#{dezenas}
+													</div>
+												</ui:repeat>
+												<div class="linha"></div>
+												<div class="formWrapConsulta fullnameConsulta">
+													<div class="formItemConsulta">
+														<p:commandButton styleClass="ui-button-info ui-button-flat" value="Detalhes"
+															icon="pi pi-book" id="btnDetalhes" onclick="PF('dialogDetails').show()" update="frmResultadosLoterias:panelResultado">
+															<f:setPropertyActionListener value="#{resultados}" target="#{loteriaBean.resultadoSelecionado}"/>
+														</p:commandButton>
+													</div>
+												</div>
+											</div>
+										</div>
+									</p:carousel>
+								</div>
+							</div>
+							<p:dialog widgetVar="dialogDetails" header="Detalhes" modal="true" showEffect="fade" hideEffect="fade" draggable="false" resizable="false" width="500" height="200">
+							<p:outputPanel id="panelResultado">
+								<div class="formWrapConsulta">
+									<div class="formItemConsulta">
+										<p style="font-family: Josefin Sans, sans-serif; font-weight: bold;" id="valorArrecadado"/>
+										<script>
+											document.getElementById("valorArrecadado").innerText = 'Arrecadação: ' + formatarValorMonetario(#{loteriaBean.resultadoSelecionado.valorArrecadado});
+										</script>
+									</div>
+									<div class="formItemConsulta">
+										<p style="font-family: Josefin Sans, sans-serif; font-weight: bold;" id="valorAcumProxConc"/>
+										<script>
+											document.getElementById("valorAcumProxConc").innerText = 'Acumulado: ' + formatarValorMonetario(#{loteriaBean.resultadoSelecionado.valorAcumuladoProximoConcurso});
+										</script>
+									</div>
+									<div class="formItemConsulta">
+										<p:dataTable var="premiacoes" value="#{loteriaBean.resultadoSelecionado.premiacoes}">
+											<p:column headerText="Faixas" style="font-family: Josefin Sans, sans-serif; text-align: center;">
+												<h:outputText value="#{premiacoes.descricao}"/>
+											</p:column>
+											<p:column headerText="Ganhadores" style="font-family: Josefin Sans, sans-serif; text-align: center;">
+												<h:outputText value="#{premiacoes.ganhadores}"/>
+											</p:column>
+											<p:column headerText="Prêmio (R$)" style="font-family: Josefin Sans, sans-serif; text-align: center;">
+												<h:outputText value="#{premiacoes.valorPremioFormatado}"/>
+											</p:column>
+										</p:dataTable>
+									</div>
+								</div>
+							</p:outputPanel>
+						</p:dialog>
+						</div>
+					</div>
+				</h:form>
+			</ui:insert>
+		</div>
+	</h:body>
+</html>

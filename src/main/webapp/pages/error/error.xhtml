@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.js" type="text/javascript"></script>
+		<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css" rel="stylesheet"/>
+		<link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/icon.ico"/>
+		<link type="text/css" href="#{request.contextPath}/includes/css/style.css" rel="stylesheet"/>
+		<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate, max-age=0"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title><ui:insert name="title">Loterias Web - Error</ui:insert></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+		<meta http-equiv="pragma" content="no-cache"/>
+		<meta charset="UTF-8"/>
+	</h:head>
+	<h:body>
+		<h:form id="frmError">
+			<div class="wrapperConsulta">
+				<div class="formContainerConsulta">
+					<div class="headingConsulta">
+						<h1>Houve erro durante a execução!</h1>
+					</div>
+					<div class="formWrapConsulta">
+						<div class="formItemConsulta" style="text-align: justify;">
+							<label for="labelExceptionMessage"><strong>Exception Message:</strong></label>
+							<label for="exceptionMessage">#{requestScope['exceptionMessage']}</label>
+							<br/>
+							<label for="labelCauseException"><strong>Cause Exception:</strong></label>
+							<label for="causeException">#{requestScope['causeException']}</label>
+							<br/>
+							<label for="labelMessage">Caso persista, localize o log em <strong><undline>C:/Users/Temp</undline></strong>
+							e encaminhe para o responsável com um print desta tela para que o mesmo analise.</label>
+						</div>
+					</div>
+					<div class="formWrapConsulta fullnameConsulta">
+						<div class="formItemConsulta"></div>
+						<div class="formItemConsulta div-button-back">
+							<p:commandButton value="Voltar" styleClass="rounded-button ui-button-danger buttons-back"
+								id="btnVoltar" icon="pi pi-arrow-left" iconPos="left" action="#{loteriaBean.redirectPageLoterias}"/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</h:body>
+</html>

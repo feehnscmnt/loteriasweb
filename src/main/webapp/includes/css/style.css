@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,700&display=swap');
+
+.wrapperConsulta .formContainerConsulta {
+	box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.25);
+	border: 1px solid #000;
+	background: #fafad2;
+	border-radius: 10px;
+	padding: 35px;
+}
+
+.wrapperConsulta .formContainerConsulta .formItemConsulta label {
+	font-family: Josefin Sans, sans-serif;
+	margin-bottom: 5px;
+	display: block;
+}
+
+.formWrapConsulta.fullnameConsulta .formItemConsulta:first-child {
+	margin-right: 4%;
+}
+
+.wrapperConsulta .formContainerConsulta .formItemConsulta {
+	margin-bottom: 25px;
+}
+
+.formItemConsulta input[type="text"]:focus {
+	border-color: #6271f0;
+}
+
+.formWrapConsulta.fullnameConsulta .formItemConsulta {
+	width: 50%;
+}
+
+.formItemConsulta input[type="text"] {
+	font-family: Josefin Sans, sans-serif;
+	border: 1px solid #dadce0;
+	border: 2px solid #000;
+	border-radius: 4px;
+	font-weight: bold;
+	font-size: 16px;
+	padding: 10px;
+	width: 100%;
+}
+
+.headingConsulta {
+	font-family: Josefin Sans, sans-serif;
+	border: 1px solid #000;
+	background: #faebd7;
+	border-radius: 10px;
+	margin-bottom: 35px;
+	text-align: center;
+	font-size: 20px;
+	padding: 5px;
+}
+
+.headingCard {
+	font-family: Josefin Sans, sans-serif;
+	border: 0px solid #000;
+	background: #faebd7;
+	margin-bottom: -15px;
+	border-radius: 10px;
+	text-align: center;
+	font-size: 20px;
+}
+
+.wrapperConsulta {
+	margin: -40px auto;
+	height: 90vh;
+	padding: 10px;
+	width: 100%;
+}
+
+.formWrapConsulta.fullnameConsulta {
+	display: flex;
+}
+
+.lottery-single .lottery-result .lottery-number {
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 1px solid;
+    font-size: 20px;
+    display: flex;
+    height: 44px;
+    margin: 5px;
+    width: 44px;
+}
+
+.lottery-single .lottery-result {
+	box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.25);
+	font-family: Josefin Sans, sans-serif;
+	justify-content: center;
+	box-sizing: border-box;
+	border: 1px solid #000;
+	align-items: center;
+	background: #faebd7;
+	border-radius: 10px;
+	flex-wrap: wrap;
+	display: flex;
+	width: 320px;
+}
+
+.linha {
+	background-color: #000000;
+	margin: 20px 0;
+	height: 2px;
+	width: 90%;
+}
+
+
+.row {
+	margin-right: -10px;
+	margin-left: -10px;
+}
+
+.backcolor-maismilionaria {
+	background-color: #2742a2;
+}
+
+.backcolor-megasena {
+	background-color: #209869;
+}
+
+.backcolor-lotofacil {
+	background-color: #930089;
+}
+
+.backcolor-quina {
+	background-color: #260085;
+}
+
+.backcolor-lotomania {
+	background-color: #f8972d
+}
+
+.backcolor-timemania {
+	background-color: #36b036;
+}
+
+.backcolor-duplasena {
+	background-color: #a61324;
+}
+
+.backcolor-federal {
+	background-color: #a61324;
+}
+
+.backcolor-diadesorte {
+	background-color: #cb852b;
+}
+
+.backcolor-supersete {
+	background-color: #a8d045;
+}
+
+.buttons-back {
+	font-family: Josefin Sans, sans-serif;
+	padding: 0px 45px;
+}
+
+.div-button-back {
+	text-align: right;
+}
