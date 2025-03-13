@@ -61,6 +61,7 @@ public class ConnectUtilsImpl implements ConnectUtils, Serializable {
 		StringBuilder sb = new StringBuilder();
 		
 		try {
+			
 			SSLContext sc = SSLContext.getInstance("TLS");
 	        sc.init(null, getTrustAllCerts(), new SecureRandom());
 	        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
@@ -73,16 +74,22 @@ public class ConnectUtilsImpl implements ConnectUtils, Serializable {
 			huc.connect();
 			
 			try (BufferedReader br = new BufferedReader(new InputStreamReader(huc.getInputStream()))) {
+				
                 sb.append(br.lines().collect(joining()));
+                
             }
 			
 			huc.disconnect();
-		} catch(Exception e) {
+			
+		} catch (Exception e) {
+			
 			LOG.error(bundle.getChaveMensagemComParametro("ERROR_EXCEPTION", "getResponseApi", e.getClass().getName(), e.getMessage()));
 			throw new IllegalArgumentException(bundle.getChaveMensagemComParametro("ERROR_EXCEPTION", "getResponseApi", e.getClass().getName(), e.getMessage()));
+			
 		}
 		
 		return String.valueOf(sb);
+		
 	}
 	
 	/**
@@ -93,32 +100,56 @@ public class ConnectUtilsImpl implements ConnectUtils, Serializable {
 	 * 
 	 */
 	private TrustManager[] getTrustAllCerts() {
+		
 		return new TrustManager[] {
+				
             new X509TrustManager() {
+            	
                 public X509Certificate[] getAcceptedIssuers() { return new X509Certificate[0]; }
+                
                 public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                	
                 	try {
+                		
                 		for (X509Certificate cert : certs) {
+                			
 	                		cert.checkValidity();
 	                		cert.verify(cert.getPublicKey());
+	                		
 	                	}
-                	} catch(Exception e) {
+                		
+                	} catch (Exception e) {
+                		
             			LOG.error(bundle.getChaveMensagemComParametro("ERROR_EXCEPTION", "getResponseApi", e.getClass().getName(), e.getMessage()));
             			throw new IllegalArgumentException(bundle.getChaveMensagemComParametro("ERROR_EXCEPTION", "getResponseApi", e.getClass().getName(), e.getMessage()));
+            			
             		}
+                	
                 }
+                
                 public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                	
                 	try {
+                		
                 		for (X509Certificate cert : certs) {
+                			
                 			cert.checkValidity();
+                			
                 		}
+                		
                 	} catch(Exception e) {
+                		
             			LOG.error(bundle.getChaveMensagemComParametro("ERROR_EXCEPTION", "getResponseApi", e.getClass().getName(), e.getMessage()));
             			throw new IllegalArgumentException(bundle.getChaveMensagemComParametro("ERROR_EXCEPTION", "getResponseApi", e.getClass().getName(), e.getMessage()));
+            			
             		}
+                	
                 }
+                
             }
+            
         };
+		
 	}
 	
 }

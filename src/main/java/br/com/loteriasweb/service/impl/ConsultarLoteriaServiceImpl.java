@@ -8,6 +8,7 @@ import br.com.loteriasweb.dto.LoteriasDTO;
 import br.com.loteriasweb.domain.Bundle;
 import javax.annotation.PostConstruct;
 import br.com.loteriasweb.utils.Utils;
+import java.util.Collections;
 import java.util.Properties;
 import java.io.Serializable;
 import com.google.gson.Gson;
@@ -74,6 +75,7 @@ public class ConsultarLoteriaServiceImpl implements ConsultarLoteriaService, Ser
 	 */
 	@Override
 	public List<ResultadosDTO> buscarResultadosLoteriaPorConcurso(String loteria, String numeroConcurso) {
+		
 		List<ResultadosDTO> listaResultados = new ArrayList<>();
 		
 		String endpointConsulta = bundle.getChaveEndpointComParametro("ENDPOINT_RESULTADO_LOTERIA_CONCURSO", loteria, numeroConcurso);
@@ -84,7 +86,10 @@ public class ConsultarLoteriaServiceImpl implements ConsultarLoteriaService, Ser
 		
 		listaResultados.add(dadosResultadosDTO);
 		
+		Collections.sort(listaResultados, new ResultadosDTO());
+		
 		return listaResultados;
+		
 	}
 	
 	/**
@@ -97,6 +102,7 @@ public class ConsultarLoteriaServiceImpl implements ConsultarLoteriaService, Ser
 	 */
 	@Override
 	public List<ResultadosDTO> buscarResultadoRecentePorLoteria(String loteria) {
+		
 		List<ResultadosDTO> listaResultados = new ArrayList<>();
 		
 		String endpointConsulta = bundle.getChaveEndpointComParametro("ENDPOINT_RESULTADO_LOTERIA_RECENTE", loteria);
@@ -111,7 +117,10 @@ public class ConsultarLoteriaServiceImpl implements ConsultarLoteriaService, Ser
 		
 		listaResultados.add(dadosResultadosDTO);
 		
+		Collections.sort(listaResultados, new ResultadosDTO());
+		
 		return listaResultados;
+		
 	}
 	
 	/**
@@ -124,6 +133,7 @@ public class ConsultarLoteriaServiceImpl implements ConsultarLoteriaService, Ser
 	 */
 	@Override
 	public List<ResultadosDTO> buscarResultadosPorLoteria(String loteria) {
+		
 		List<ResultadosDTO> listaResultados = new ArrayList<>();
 		
 		String endpointConsulta = bundle.getChaveEndpointComParametro("ENDPOINT_RESULTADO_LOTERIA_ESPECIFICA", loteria);
@@ -134,7 +144,10 @@ public class ConsultarLoteriaServiceImpl implements ConsultarLoteriaService, Ser
 		
 		listaResultados.add(dadosResultadosDTO);
 		
+		Collections.sort(listaResultados, new ResultadosDTO());
+		
 		return listaResultados;
+		
 	}
 	
 	/**
@@ -145,6 +158,7 @@ public class ConsultarLoteriaServiceImpl implements ConsultarLoteriaService, Ser
 	 */
 	@Override
 	public List<LoteriasDTO> buscarLoterias() {
+		
 		List<LoteriasDTO> listaLoterias = new ArrayList<>();
 		
 		String endpointConsulta = bundle.getChaveEndpointComParametro("ENDPOINT_TODAS_LOTERIAS");
@@ -162,7 +176,10 @@ public class ConsultarLoteriaServiceImpl implements ConsultarLoteriaService, Ser
 			
 		}
 		
+		Collections.sort(listaLoterias, new LoteriasDTO());
+		
 		return listaLoterias;
+		
 	}
 	
 }

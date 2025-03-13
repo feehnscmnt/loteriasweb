@@ -49,12 +49,18 @@ public class BundleImpl implements Bundle, Serializable {
 	 */
 	@Override
 	public String getChaveMensagem(String key) {
+		
 		try {
+			
 			return ResourceBundle.getBundle(utils.getResourceMessage(), new Locale("pt", "BR")).getString(key);
-		} catch(MissingResourceException | NullPointerException e) {
-			LOG.error("Houve erro no método getChaveMensagem. Exception: ".concat(e.getClass().getName()).concat(" :: Message: ").concat(e.getMessage()));
-			throw new IllegalArgumentException("Houve erro no método getChaveMensagem. Exception: ".concat(e.getClass().getName()).concat(" :: Message: ").concat(e.getMessage()));
+			
+		} catch (MissingResourceException | NullPointerException e) {
+			
+			LOG.error(String.format("Houve erro no método getChaveMensagem. Exception: %s :: Message: %s", e.getClass().getName(), e.getMessage()));
+			throw new IllegalArgumentException(String.format("Houve erro no método getChaveMensagem. Exception: %s :: Message: %s", e.getClass().getName(), e.getMessage()));
+			
 		}
+		
 	}
 	
 	/**
@@ -68,9 +74,7 @@ public class BundleImpl implements Bundle, Serializable {
 	 */
 	@Override
 	public String getChaveMensagemComParametro(String key, Object ... params) {
-		String str = ResourceBundle.getBundle(utils.getResourceMessage(), new Locale("pt", "BR")).getString(key);
-		MessageFormat messageFormat = new MessageFormat(str);
-		return messageFormat.format(params);
+		return new MessageFormat(ResourceBundle.getBundle(utils.getResourceMessage(), new Locale("pt", "BR")).getString(key)).format(params);
 	}
 	
 	/**
@@ -83,12 +87,18 @@ public class BundleImpl implements Bundle, Serializable {
 	 */
 	@Override
 	public String getChaveEndpoint(String key) {
+		
 		try {
+			
 			return ResourceBundle.getBundle(utils.getResourceEndpoints(), new Locale("pt", "BR")).getString(key);
-		} catch(MissingResourceException | NullPointerException e) {
-			LOG.error("Houve erro no método getChaveEndpoint. Exception: ".concat(e.getClass().getName()).concat(" :: Message: ").concat(e.getMessage()));
-			throw new IllegalArgumentException("Houve erro no método getChaveEndpoint. Exception: ".concat(e.getClass().getName()).concat(" :: Message: ").concat(e.getMessage()));
+			
+		} catch (MissingResourceException | NullPointerException e) {
+			
+			LOG.error(String.format("Houve erro no método getChaveEndpoint. Exception: %s :: Message: %s", e.getClass().getName(), e.getMessage()));
+			throw new IllegalArgumentException(String.format("Houve erro no método getChaveEndpoint. Exception: %s :: Message: %s", e.getClass().getName(), e.getMessage()));
+			
 		}
+		
 	}
 	
 	/**
@@ -102,9 +112,7 @@ public class BundleImpl implements Bundle, Serializable {
 	 */
 	@Override
 	public String getChaveEndpointComParametro(String key, Object ... params) {
-		String str = ResourceBundle.getBundle(utils.getResourceEndpoints(), new Locale("pt", "BR")).getString(key);
-		MessageFormat messageFormat = new MessageFormat(str);
-		return messageFormat.format(params);
+		return new MessageFormat(ResourceBundle.getBundle(utils.getResourceEndpoints(), new Locale("pt", "BR")).getString(key)).format(params);
 	}
 	
 }

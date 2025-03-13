@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import javax.faces.context.FacesContext;
 import br.com.loteriasweb.domain.Bundle;
+import javax.servlet.http.HttpSession;
 import br.com.loteriasweb.utils.Utils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -51,13 +52,18 @@ public class UtilsImpl implements Utils, Serializable {
 		
 		try (InputStream is = FacesContext.getCurrentInstance()
 				.getExternalContext().getResourceAsStream("/WEB-INF/configs/log4j.properties")) {
+			
 			properties.load(is);
-		} catch(IOException e) {
+			
+		} catch (IOException e) {
+			
 			LOG.error(bundle.getChaveMensagemComParametro("ERROR_EXCEPTION", "initLog", e.getClass().getName(), e.getMessage()));
 			throw new IllegalArgumentException(bundle.getChaveMensagemComParametro("ERROR_EXCEPTION", "initLog", e.getClass().getName(), e.getMessage()));
+			
 		}
 		
 		PropertyConfigurator.configure(properties);
+		
 	}
 	
 	/**
@@ -72,13 +78,18 @@ public class UtilsImpl implements Utils, Serializable {
 		
 		try (InputStream is = FacesContext.getCurrentInstance()
 				.getExternalContext().getResourceAsStream("/WEB-INF/configs/props.properties")) {
+			
 			properties.load(is);
-		} catch(IOException e) {
+			
+		} catch (IOException e) {
+			
 			LOG.error(bundle.getChaveMensagemComParametro("ERROR_EXCEPTION", "getProperties", e.getClass().getName(), e.getMessage()));
 			throw new IllegalArgumentException(bundle.getChaveMensagemComParametro("ERROR_EXCEPTION", "getProperties", e.getClass().getName(), e.getMessage()));
+			
 		}
 		
 		return properties;
+		
 	}
 	
 	/**
@@ -113,12 +124,18 @@ public class UtilsImpl implements Utils, Serializable {
 	 */
 	@Override
 	public String encodeString(String str) {
+		
 		try {
+			
 			return URLEncoder.encode(!str.equals("") ? str : "", String.valueOf(StandardCharsets.UTF_8)).replace("+", "%20");
-		} catch(UnsupportedEncodingException e) {
+			
+		} catch (UnsupportedEncodingException e) {
+			
 			LOG.error(bundle.getChaveMensagemComParametro("ERROR_EXCEPTION", "encodeString", e.getClass().getName(), e.getMessage()));
 			throw new IllegalArgumentException(bundle.getChaveMensagemComParametro("ERROR_EXCEPTION", "encodeString", e.getClass().getName(), e.getMessage()));
+			
         }
+		
 	}
 	
 	/**
@@ -129,7 +146,9 @@ public class UtilsImpl implements Utils, Serializable {
 	 */
 	@Override
 	public String[] getLotteryDescription() {
+		
 		return new String [] {
+			
 			"maismilionaria",
 			"megasena",
 			"lotofacil",
@@ -139,7 +158,9 @@ public class UtilsImpl implements Utils, Serializable {
 			"duplasena",
 			"diadesorte",
 			"supersete"
+			
 		};
+		
 	}
 	
 	/**
@@ -152,47 +173,47 @@ public class UtilsImpl implements Utils, Serializable {
 	 */
 	@Override
 	public String alterLotteryName(String loteria) {
-		String novaLoteria = null;
 		
 		if (loteria.equals(getLotteryDescription()[0])) {
 			
-			novaLoteria = "+ Milionária";
+			return "+ Milionária";
 			
 		} else if (loteria.equals(getLotteryDescription()[1])) {
 			
-			novaLoteria = "Mega Sena";
+			return "Mega Sena";
 			
 		} else if (loteria.equals(getLotteryDescription()[2])) {
 			
-			novaLoteria = "Lotofácil";
+			return "Lotofácil";
 			
 		} else if (loteria.equals(getLotteryDescription()[3])) {
 			
-			novaLoteria = "Quina";
+			return "Quina";
 			
 		} else if (loteria.equals(getLotteryDescription()[4])) {
 			
-			novaLoteria = "Lotomania";
+			return "Lotomania";
 			
 		} else if (loteria.equals(getLotteryDescription()[5])) {
 			
-			novaLoteria = "Timemania";
+			return "Timemania";
 			
 		} else if (loteria.equals(getLotteryDescription()[6])) {
 			
-			novaLoteria = "Dupla Sena";
+			return "Dupla Sena";
 			
 		} else if (loteria.equals(getLotteryDescription()[7])) {
 			
-			novaLoteria = "Dia de Sorte";
+			return "Dia de Sorte";
 			
 		} else if (loteria.equals(getLotteryDescription()[8])) {
 			
-			novaLoteria = "Super Sete";
+			return "Super Sete";
 			
 		}
 		
-		return novaLoteria;
+		return null;
+		
 	}
 	
 	/**
@@ -205,47 +226,47 @@ public class UtilsImpl implements Utils, Serializable {
 	 */
 	@Override
 	public String getBackcolorLoterias(String loteria) {
-		String backcolor = null;
 		
 		if (loteria.equals(getLotteryDescription()[0])) {
 			
-			backcolor = "backcolor-maismilionaria";
+			return "backcolor-maismilionaria";
 			
 		} else if (loteria.equals(getLotteryDescription()[1])) {
 			
-			backcolor = "backcolor-megasena";
+			return "backcolor-megasena";
 			
 		} else if (loteria.equals(getLotteryDescription()[2])) {
 			
-			backcolor = "backcolor-lotofacil";
+			return "backcolor-lotofacil";
 			
 		} else if (loteria.equals(getLotteryDescription()[3])) {
 			
-			backcolor = "backcolor-quina";
+			return "backcolor-quina";
 			
 		} else if (loteria.equals(getLotteryDescription()[4])) {
 			
-			backcolor = "backcolor-lotomania";
+			return "backcolor-lotomania";
 			
 		} else if (loteria.equals(getLotteryDescription()[5])) {
 			
-			backcolor = "backcolor-timemania";
+			return "backcolor-timemania";
 			
 		} else if (loteria.equals(getLotteryDescription()[6])) {
 			
-			backcolor = "backcolor-duplasena";
+			return "backcolor-duplasena";
 			
 		} else if (loteria.equals(getLotteryDescription()[7])) {
 			
-			backcolor = "backcolor-diadesorte";
+			return "backcolor-diadesorte";
 			
 		} else if (loteria.equals(getLotteryDescription()[8])) {
 			
-			backcolor = "backcolor-supersete";
+			return "backcolor-supersete";
 			
 		}
 		
-		return backcolor;
+		return null;
+		
 	}
 	
 	/**
@@ -258,7 +279,16 @@ public class UtilsImpl implements Utils, Serializable {
 	 */
 	@Override
 	public String getAccumulated(Boolean acumulou) {
-		return acumulou != null ? "ACUMULOU" : "";
+		return acumulou != null ? "ACUMULOU" : "NÃO ACUMULOU";
+	}
+	
+	/**
+	 * Método responsável por setar o tempo de inativação da sessão.
+	 */
+	@Override
+	public void timerSession() {
+		((HttpSession) FacesContext.getCurrentInstance()
+			.getExternalContext().getSession(true)).setMaxInactiveInterval(1800);
 	}
 	
 }

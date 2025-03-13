@@ -10,6 +10,7 @@ import br.com.loteriasweb.utils.Utils;
 import org.apache.log4j.LogManager;
 import javax.faces.view.ViewScoped;
 import org.apache.log4j.Logger;
+import java.util.Comparator;
 import java.io.Serializable;
 import java.io.IOException;
 import javax.inject.Inject;
@@ -33,8 +34,8 @@ public class LoteriaBean implements Serializable {
 	
 	private transient ResultadosDTO resultadoSelecionado = new ResultadosDTO();
 	
+	private List<ResponsiveOption> listaRespOptions = new ArrayList<>();
 	private List<ResultadosDTO> listaResultados = new ArrayList<>();
-	private List<ResponsiveOption> listaRespOptions;
 	
 	private ConsultarLoteriaService consLoterService;
 	private Bundle bundle;
@@ -59,29 +60,41 @@ public class LoteriaBean implements Serializable {
 	 * Método responsável pela inicialização das listas de resultados recentes das loterias.
 	 */
 	public void init() {
+		
 		utils.initLog();
 		
+		utils.timerSession();
+		
 		Arrays.stream(utils.getLotteryDescription()).forEach(loteria -> {
+			
 			List<ResultadosDTO> resultados = consLoterService.buscarResultadoRecentePorLoteria(loteria);
 			listaResultados.addAll(resultados);
+			
 		});
 		
-		listaRespOptions = new ArrayList<>();
+		listaResultados.sort(Comparator.comparing(ResultadosDTO::getLoteria));
+		
 		listaRespOptions.add(new ResponsiveOption("1024px", 3, 3));
 		listaRespOptions.add(new ResponsiveOption("768px", 2, 2));
 		listaRespOptions.add(new ResponsiveOption("560px", 1, 1));
+		
 	}
 	
 	/**
 	 * Método responsável pelo redirecionamento para a página loterias.
 	 */
 	public void redirectPageLoterias() {
+		
 		try {
+			
 			ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
 			ec.redirect(ec.getRequestContextPath().concat("/loterias"));
-		} catch(IOException e) {
+			
+		} catch (IOException e) {
+			
 			LOG.error(bundle.getChaveMensagemComParametro("ERROR_EXCEPTION", "redirectPageLoterias", e.getClass().getName(), e.getMessage()));
 			throw new IllegalArgumentException(bundle.getChaveMensagemComParametro("ERROR_EXCEPTION", "redirectPageLoterias", e.getClass().getName(), e.getMessage()));
+			
 		}
 	}
 	

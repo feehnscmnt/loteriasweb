@@ -1,6 +1,7 @@
 package br.com.loteriasweb.exception;
 
 import javax.faces.event.ExceptionQueuedEventContext;
+import javax.faces.application.ViewExpiredException;
 import javax.faces.context.ExceptionHandlerWrapper;
 import javax.faces.application.NavigationHandler;
 import javax.faces.event.ExceptionQueuedEvent;
@@ -41,29 +42,46 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper implements S
 	 */
 	@Override
 	public void handle() throws FacesException {
+		
 		Iterator<ExceptionQueuedEvent> iterator = getUnhandledExceptionQueuedEvents().iterator();
+		String exceptionMessage = null;
 		
 		while (iterator.hasNext()) {
+			
 			ExceptionQueuedEvent eqe = iterator.next();
 			
 			ExceptionQueuedEventContext eqec = (ExceptionQueuedEventContext) eqe.getSource();
 			
 			Throwable throwable = eqec.getException();
 			
-			String exceptionMessage = throwable.getMessage().contains("restaurada") ? "Sua sessão expirou. Faça login novamente!" : throwable.getMessage();
+			if (throwable instanceof ViewExpiredException) {
+				
+				exceptionMessage = "Sua sessão está expirada. Atualize a página.";
+				
+			} else {
+				
+				exceptionMessage = throwable.getMessage();
+				
+			}
 			
-			try {				
+			try {
+				
 				requestMap.put("exceptionMessage", exceptionMessage);
 				requestMap.put("causeException", throwable.getCause());
 				
 				navigationHandler.handleNavigation(facesContext, null, "/pages/error/error");				
-				facesContext.renderResponse();				
-			} finally {				
-				iterator.remove();				
+				facesContext.renderResponse();
+				
+			} finally {
+				
+				iterator.remove();
+				
 			}
+			
 		}
 		
 		getWrapped().handle();
+		
 	}
 	
 	/**

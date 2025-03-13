@@ -33,7 +33,7 @@ public class LoteriasServlet extends HttpServlet implements Serializable {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			req.getRequestDispatcher("/pages/loterias/loterias.xhtml").forward(req, resp);
-		} catch(IOException | ServletException e) {
+		} catch (IOException | ServletException e) {
 			LOG.error(String.format("Houve erro no método doGet. Exception: %s :: Message: %s", e.getClass().getName(), e.getMessage()));
 		}
 	}

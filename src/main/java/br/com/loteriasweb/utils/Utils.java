@@ -88,4 +88,9 @@ public interface Utils {
 	 */
 	public String getAccumulated(Boolean acumulou);
 	
+	/**
+	 * Método responsável por setar o tempo de inativação da sessão.
+	 */
+	public void timerSession();
+	
 }
