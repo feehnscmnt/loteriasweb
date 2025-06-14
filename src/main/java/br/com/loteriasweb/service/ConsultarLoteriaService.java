@@ -1,21 +1,60 @@
 package br.com.loteriasweb.service;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import br.com.loteriasweb.dto.ResultadosDTO;
+import br.com.loteriasweb.util.ConnectUtil;
 import br.com.loteriasweb.dto.LoteriasDTO;
+import jakarta.annotation.PostConstruct;
+import br.com.loteriasweb.domain.Bundle;
+import br.com.loteriasweb.util.Util;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import java.io.Serializable;
+import java.util.Comparator;
+import com.google.gson.Gson;
+import java.util.Properties;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Interface de implementação da classe responsável pela comunicação
- * com a loteriascaixa-api para consulta de informações das loterias.
+ * Classe service responsável pela comunicação com a loteriascaixa-api para consulta de resultados.
  * 
  * @author Felipe Nascimento
- *
+ * 
  */
 
-public interface ConsultarLoteriaService {
+@Named
+@ApplicationScoped
+public class ConsultarLoteriaService implements Serializable {
+	private static final long serialVersionUID = 3515077755575764230L;
+	private String headerValueAccept;
+	private String headerKeyAccept;
+	private String methodGet;
+	private String urlApi;
+	
+	@Inject
+	private ConnectUtil connect;
+	
+	@Inject
+	private Bundle bundle;
+	
+	@Inject
+	private Util util;
 	
 	/**
-	 * Assinatura do método responsável por gerar a lista de todos os resultados
+	 * Método responsável pela inicialização das propriedades.
+	 */
+	@PostConstruct
+	public void init() {
+		Properties properties = util.getProperties();
+		headerValueAccept = properties.getProperty("HEADER_VALUE_ACCEPT");
+		headerKeyAccept = properties.getProperty("HEADER_KEY_ACCEPT");
+		urlApi = properties.getProperty("URL_LOTERIASCAIXA_API");
+		methodGet = properties.getProperty("METHOD_GET");
+	}
+	
+	/**
+	 * Implementação do método responsável por gerar a lista de todos os resultados
 	 * pela loteria informada e pelo concurso informado.
 	 * 
 	 * @param loteria - {@link String} - descrição da loteria para busca (Ex.: lotofacil)
@@ -24,34 +63,109 @@ public interface ConsultarLoteriaService {
 	 * @return lista de resultados
 	 * 
 	 */
-	public List<ResultadosDTO> buscarResultadosLoteriaPorConcurso(String loteria, String numeroConcurso);
+	public List<ResultadosDTO> buscarResultadosLoteriaPorConcurso(String loteria, String numeroConcurso) {
+		
+		var listaResultados = new ArrayList<ResultadosDTO>();
+		
+		var endpointConsulta = bundle.getChaveEndpointComParametro("ENDPOINT_RESULTADO_LOTERIA_CONCURSO", loteria, numeroConcurso);
+		
+		var responseApi = connect.getResponseApi(String.format("%s%s", urlApi, endpointConsulta), headerKeyAccept, headerValueAccept, methodGet);
+		
+		var dadosResultadosDTO = new Gson().fromJson(responseApi, ResultadosDTO.class);
+		
+		listaResultados.add(dadosResultadosDTO);
+		
+		listaResultados.sort(Comparator.comparing(ResultadosDTO::getLoteria));
+		
+		return listaResultados;
+		
+	}
 	
 	/**
-	 * Assinatura do método responsável por gerar a lista do último resultado pela loteria informada.
+	 * Implementação do método responsável por gerar a lista do último resultado pela loteria informada.
 	 * 
 	 * @param loteria - {@link String} - descrição da loteria para busca (Ex.: lotofacil)
 	 * 
 	 * @return lista de resultados
 	 * 
 	 */
-	public List<ResultadosDTO> buscarResultadoRecentePorLoteria(String loteria);
+	public List<ResultadosDTO> buscarResultadoRecentePorLoteria(String loteria) {
+		
+		var listaResultados = new ArrayList<ResultadosDTO>();
+		
+		var endpointConsulta = bundle.getChaveEndpointComParametro("ENDPOINT_RESULTADO_LOTERIA_RECENTE", loteria);
+		
+		var responseApi = connect.getResponseApi(String.format("%s%s", urlApi, endpointConsulta), headerKeyAccept, headerValueAccept, methodGet);
+		
+		var dadosResultadosDTO = new Gson().fromJson(responseApi, ResultadosDTO.class);
+		
+		dadosResultadosDTO.setLoteria(util.alterLotteryName(loteria));
+		dadosResultadosDTO.setBackcolorLoterias(util.getBackcolorLoterias(loteria));
+		dadosResultadosDTO.setStrAcumulou(util.getAccumulated(dadosResultadosDTO.getAcumulou()));
+		
+		listaResultados.add(dadosResultadosDTO);
+		
+		listaResultados.sort(Comparator.comparing(ResultadosDTO::getLoteria));
+		
+		return listaResultados;
+		
+	}
 	
 	/**
-	 * Assinatura do método responsável por gerar a lista de todos os resultados pela loteria informada.
+	 * Implementação do método responsável por gerar a lista de todos os resultados pela loteria informada.
 	 * 
 	 * @param loteria - {@link String} - descrição da loteria para busca (Ex.: lotofacil)
 	 * 
 	 * @return lista de resultados
 	 * 
 	 */
-	public List<ResultadosDTO> buscarResultadosPorLoteria(String loteria);
+	public List<ResultadosDTO> buscarResultadosPorLoteria(String loteria) {
+		
+		var listaResultados = new ArrayList<ResultadosDTO>();
+		
+		var endpointConsulta = bundle.getChaveEndpointComParametro("ENDPOINT_RESULTADO_LOTERIA_ESPECIFICA", loteria);
+		
+		var responseApi = connect.getResponseApi(String.format("%s%s", urlApi, endpointConsulta), headerKeyAccept, headerValueAccept, methodGet);
+		
+		var dadosResultadosDTO = new Gson().fromJson(responseApi, ResultadosDTO.class);
+		
+		listaResultados.add(dadosResultadosDTO);
+		
+		listaResultados.sort(Comparator.comparing(ResultadosDTO::getLoteria));
+		
+		return listaResultados;
+		
+	}
 	
 	/**
-	 * Assinatura do método responsável por gerar a lista de todas as loterias.
+	 * Implementação do método responsável por gerar a lista de todas as loterias.
 	 * 
 	 * @return lista de loterias
 	 * 
 	 */
-	public List<LoteriasDTO> buscarLoterias();
+	public List<LoteriasDTO> buscarLoterias() {
+		
+		var listaLoterias = new ArrayList<LoteriasDTO>();
+		
+		var endpointConsulta = bundle.getChaveEndpointComParametro("ENDPOINT_TODAS_LOTERIAS");
+		
+		var responseApi = connect.getResponseApi(String.format("%s%s", urlApi, endpointConsulta), headerKeyAccept, headerValueAccept, methodGet);
+		
+		var dadosLoterias = new Gson().fromJson(responseApi, LoteriasDTO[].class);
+		
+		for (LoteriasDTO loterias : dadosLoterias) {
+			
+			var loteriasDTO = new LoteriasDTO();
+			loteriasDTO.setLoterias(loterias.getLoterias());
+			
+			listaLoterias.add(loteriasDTO);
+			
+		}
+		
+		listaLoterias.sort(Comparator.comparing(LoteriasDTO::getLoterias));
+		
+		return listaLoterias;
+		
+	}
 	
 }

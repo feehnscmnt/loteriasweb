@@ -3,19 +3,14 @@ package br.com.loteriasweb.bean;
 import br.com.loteriasweb.service.ConsultarLoteriaService;
 import org.primefaces.model.ResponsiveOption;
 import br.com.loteriasweb.dto.ResultadosDTO;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import br.com.loteriasweb.domain.Bundle;
-import br.com.loteriasweb.utils.Utils;
-import org.apache.log4j.LogManager;
-import javax.faces.view.ViewScoped;
-import org.apache.log4j.Logger;
-import java.util.Comparator;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped;
+import br.com.loteriasweb.util.Util;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import java.io.Serializable;
-import java.io.IOException;
-import javax.inject.Inject;
 import java.util.ArrayList;
-import javax.inject.Named;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,50 +24,30 @@ import java.util.List;
 @Named
 @ViewScoped
 public class LoteriaBean implements Serializable {
-	private static final Logger LOG = LogManager.getLogger(LoteriaBean.class.getName());
-	private static final long serialVersionUID = -8825364807788515339L;
-	
+	private static final long serialVersionUID = -1203378132360807839L;
 	private transient ResultadosDTO resultadoSelecionado = new ResultadosDTO();
-	
 	private List<ResponsiveOption> listaRespOptions = new ArrayList<>();
 	private List<ResultadosDTO> listaResultados = new ArrayList<>();
 	
-	private ConsultarLoteriaService consLoterService;
-	private Bundle bundle;
-	private Utils utils;
-	
-	/**
-	 * Construtor da classe parametrizado para injeção dos serviços.
-	 * 
-	 * @param consLoterService - {@link ConsultarLoteriaService} - serviço de consulta dos resultados das loterias
-	 * @param bundle - {@link Bundle} - serviço de internacionalização da aplicação
-	 * @param utils - {@link Utils} - serviço de utilidades da aplicação
-	 * 
-	 */
 	@Inject
-	public LoteriaBean(ConsultarLoteriaService consLoterService, Bundle bundle, Utils utils) {
-		this.consLoterService = consLoterService;
-		this.bundle = bundle;
-		this.utils = utils;
-	}
+	private ConsultarLoteriaService consLoterService;
+	
+	@Inject
+	private Util util;
 	
 	/**
 	 * Método responsável pela inicialização das listas de resultados recentes das loterias.
 	 */
 	public void init() {
 		
-		utils.initLog();
+		util.timerSession();
 		
-		utils.timerSession();
-		
-		Arrays.stream(utils.getLotteryDescription()).forEach(loteria -> {
+		Arrays.stream(util.getLotteryDescription()).forEach(loteria -> {
 			
-			List<ResultadosDTO> resultados = consLoterService.buscarResultadoRecentePorLoteria(loteria);
+			var resultados = consLoterService.buscarResultadoRecentePorLoteria(loteria);
 			listaResultados.addAll(resultados);
 			
 		});
-		
-		listaResultados.sort(Comparator.comparing(ResultadosDTO::getLoteria));
 		
 		listaRespOptions.add(new ResponsiveOption("1024px", 3, 3));
 		listaRespOptions.add(new ResponsiveOption("768px", 2, 2));
@@ -87,15 +62,15 @@ public class LoteriaBean implements Serializable {
 		
 		try {
 			
-			ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-			ec.redirect(ec.getRequestContextPath().concat("/loterias"));
+			var ec = FacesContext.getCurrentInstance().getExternalContext();
+			ec.redirect(String.format("%s/loterias", ec.getRequestContextPath()));
 			
 		} catch (IOException e) {
 			
-			LOG.error(bundle.getChaveMensagemComParametro("ERROR_EXCEPTION", "redirectPageLoterias", e.getClass().getName(), e.getMessage()));
-			throw new IllegalArgumentException(bundle.getChaveMensagemComParametro("ERROR_EXCEPTION", "redirectPageLoterias", e.getClass().getName(), e.getMessage()));
+			throw new IllegalArgumentException(e.getMessage(), e.getCause());
 			
 		}
+		
 	}
 	
 	/**

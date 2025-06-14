@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<context path="/loteriasweb"/>
+<context path="/loteriasweb">
+  <resource name="BeanManager"
+            auth="Container"
+            type="jakarta.enterprise.inject.spi.BeanManager"
+            factory="org.jboss.weld.resources.ManagerObjectFactory"/>
+</context>

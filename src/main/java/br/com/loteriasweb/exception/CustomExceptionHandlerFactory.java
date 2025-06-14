@@ -1,7 +1,7 @@
 package br.com.loteriasweb.exception;
 
-import javax.faces.context.ExceptionHandlerFactory;
-import javax.faces.context.ExceptionHandler;
+import jakarta.faces.context.ExceptionHandlerFactory;
+import jakarta.faces.context.ExceptionHandler;
 import java.io.Serializable;
 
 /**
@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 
 public class CustomExceptionHandlerFactory extends ExceptionHandlerFactory implements Serializable {
-	private static final long serialVersionUID = 1974923816270876214L;
+	private static final long serialVersionUID = 6400506216470093900L;
 	private transient ExceptionHandlerFactory exceptionHandlerFactory;
 	
 	/**

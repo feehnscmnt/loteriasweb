@@ -1,15 +1,13 @@
 package br.com.loteriasweb.exception;
 
-import javax.faces.event.ExceptionQueuedEventContext;
-import javax.faces.application.ViewExpiredException;
-import javax.faces.context.ExceptionHandlerWrapper;
-import javax.faces.application.NavigationHandler;
-import javax.faces.event.ExceptionQueuedEvent;
-import javax.faces.context.ExceptionHandler;
-import javax.faces.context.FacesContext;
-import javax.faces.FacesException;
+import jakarta.faces.event.ExceptionQueuedEventContext;
+import jakarta.faces.application.ViewExpiredException;
+import jakarta.faces.context.ExceptionHandlerWrapper;
+import jakarta.faces.application.NavigationHandler;
+import jakarta.faces.context.ExceptionHandler;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.FacesException;
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -20,10 +18,10 @@ import java.util.Map;
  */
 
 public class CustomExceptionHandler extends ExceptionHandlerWrapper implements Serializable {
+	private static final long serialVersionUID = -2675998920925459907L;
 	private transient FacesContext facesContext = FacesContext.getCurrentInstance();
 	private transient NavigationHandler navigationHandler = facesContext.getApplication().getNavigationHandler();
 	private transient Map<String, Object> requestMap = facesContext.getExternalContext().getRequestMap();
-	private static final long serialVersionUID = 4735652115221699044L;
 	private transient ExceptionHandler exceptionHandler;
 	
 	/**
@@ -43,16 +41,16 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper implements S
 	@Override
 	public void handle() throws FacesException {
 		
-		Iterator<ExceptionQueuedEvent> iterator = getUnhandledExceptionQueuedEvents().iterator();
-		String exceptionMessage = null;
+		var iterator = getUnhandledExceptionQueuedEvents().iterator();
+		var exceptionMessage = "";
 		
 		while (iterator.hasNext()) {
 			
-			ExceptionQueuedEvent eqe = iterator.next();
+			var eqe = iterator.next();
 			
-			ExceptionQueuedEventContext eqec = (ExceptionQueuedEventContext) eqe.getSource();
+			var eqec = (ExceptionQueuedEventContext) eqe.getSource();
 			
-			Throwable throwable = eqec.getException();
+			var throwable = eqec.getException();
 			
 			if (throwable instanceof ViewExpiredException) {
 				

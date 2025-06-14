@@ -64,8 +64,8 @@
 
 .wrapperConsulta {
 	margin: -40px auto;
-	height: 90vh;
 	padding: 10px;
+	height: 90vh;
 	width: 100%;
 }
 
@@ -89,10 +89,10 @@
 	box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.25);
 	font-family: Josefin Sans, sans-serif;
 	justify-content: center;
-	box-sizing: border-box;
 	border: 1px solid #000;
-	align-items: center;
+	box-sizing: border-box;
 	background: #faebd7;
+	align-items: center;
 	border-radius: 10px;
 	flex-wrap: wrap;
 	display: flex;
