@@ -101,6 +101,7 @@ public class Util implements Serializable {
 			"lotomania",
 			"timemania",
 			"duplasena",
+			"federal",
 			"diadesorte",
 			"supersete"
 			
@@ -148,9 +149,13 @@ public class Util implements Serializable {
 			
 		} else if (Objects.equals(loteria, getLotteryDescription()[7])) {
 			
+			return "Federal";
+			
+		}  else if (Objects.equals(loteria, getLotteryDescription()[8])) {
+			
 			return "Dia de Sorte";
 			
-		} else if (Objects.equals(loteria, getLotteryDescription()[8])) {
+		} else if (Objects.equals(loteria, getLotteryDescription()[9])) {
 			
 			return "Super Sete";
 			
@@ -200,9 +205,13 @@ public class Util implements Serializable {
 			
 		} else if (Objects.equals(loteria, getLotteryDescription()[7])) {
 			
-			return "backcolor-diadesorte";
+			return "backcolor-federal";
 			
 		} else if (Objects.equals(loteria, getLotteryDescription()[8])) {
+			
+			return "backcolor-diadesorte";
+			
+		} else if (Objects.equals(loteria, getLotteryDescription()[9])) {
 			
 			return "backcolor-supersete";
 			
@@ -222,7 +231,7 @@ public class Util implements Serializable {
 	 */
 	public String getAccumulated(Boolean acumulou) {
 		
-		return Objects.nonNull(acumulou) ? "ACUMULOU" : "NÃO ACUMULOU";
+		return acumulou != false ? "ACUMULOU" : "NÃO ACUMULOU";
 		
 	}
 	
@@ -233,6 +242,45 @@ public class Util implements Serializable {
 		
 		((HttpSession) FacesContext.getCurrentInstance()
 			.getExternalContext().getSession(true)).setMaxInactiveInterval(1800);
+		
+	}
+	
+	/**
+	 * Método responsável por colocar String em caixa baixa
+	 * e com a primeira letra de cada palavra em maiúscula.
+	 * 
+	 * @param str - String que será tratada
+	 * 
+	 * @return String tratada
+	 * 
+	 */
+	public String capitalizeString(String str) {
+		
+		var capitalizedString = new StringBuilder();
+		var words = str.toLowerCase().split(" ");
+		
+		for (var i = 0; i < words.length; i++) {
+			
+			var word = words[i];
+			
+			if (word.isEmpty()) {
+				
+                capitalizedString.append(" ");
+                continue;
+                
+            }
+
+            capitalizedString.append(word.substring(0, 1).toUpperCase()).append(word.substring(1));
+            
+            if (i < words.length - 1) {
+            	
+                capitalizedString.append(" ");
+                
+            }
+			
+		}
+		
+		return String.valueOf(capitalizedString);
 		
 	}
 	

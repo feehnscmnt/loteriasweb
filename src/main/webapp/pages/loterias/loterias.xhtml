@@ -33,6 +33,11 @@
 							<div class="headingConsulta">
 								<h1>Resultado das Loterias</h1>
 							</div>
+							<br/>
+							<p:commandButton styleClass="ui-button-info ui-button-flat" value="Resultado por Concurso"
+								icon="pi pi-search-plus" id="btnBuscarResultConc" onclick="PF('dialogBuscarResultConc').show()">
+							</p:commandButton>
+							<br/><br/>
 							<div class="formWrapConsulta">
 								<div class="formItemConsulta" style="text-align: justify;">
 									<p:carousel value="#{loteriaBean.listaResultados}" var="resultados"
@@ -45,7 +50,7 @@
 													<h4>#{resultados.strAcumulou}</h4>
 												</div>
 												<div class="linha"></div>
-												<ui:repeat value="#{resultados.dezenasOrdemSorteio}" var="dezenas">
+												<ui:repeat value="#{resultados.dezenas}" var="dezenas">
 													<div class="lottery-number #{resultados.backcolorLoterias}">
 														#{dezenas}
 													</div>
@@ -64,37 +69,112 @@
 									</p:carousel>
 								</div>
 							</div>
-							<p:dialog widgetVar="dialogDetails" header="Detalhes" modal="true" showEffect="fade" hideEffect="fade" draggable="false" resizable="false" width="500" height="200">
-							<p:outputPanel id="panelResultado">
+							<p:dialog widgetVar="dialogDetails" header="Detalhes" modal="true" showEffect="fade" hideEffect="fade" draggable="false" resizable="false" width="500" height="450">
+								<p:outputPanel id="panelResultado">
+									<div class="formWrapConsulta">
+										<div class="formItemConsulta">
+											<p style="font-family: Josefin Sans, sans-serif; font-weight: bold;" id="valorArrecadado"/>
+											<script>
+												document.getElementById("valorArrecadado").innerText = 'Arrecadação: ' + formatarValorMonetario(#{loteriaBean.resultadoSelecionado.valorArrecadado});
+											</script>
+										</div>
+										<div class="formItemConsulta">
+											<p style="font-family: Josefin Sans, sans-serif; font-weight: bold;" id="valorAcumProxConc"/>
+											<script>
+												document.getElementById("valorAcumProxConc").innerText = 'Acumulado: ' + formatarValorMonetario(#{loteriaBean.resultadoSelecionado.valorAcumuladoProximoConcurso});
+											</script>
+										</div>
+										<div class="formItemConsulta">
+											<p:dataTable var="premiacoes" value="#{loteriaBean.resultadoSelecionado.premiacoes}">
+												<p:column headerText="Faixas" style="font-family: Josefin Sans, sans-serif; text-align: center;">
+													<h:outputText value="#{premiacoes.descricao}"/>
+												</p:column>
+												<p:column headerText="Ganhadores" style="font-family: Josefin Sans, sans-serif; text-align: center;">
+													<h:outputText value="#{premiacoes.ganhadores}"/>
+												</p:column>
+												<p:column headerText="Prêmio (R$)" style="font-family: Josefin Sans, sans-serif; text-align: center;">
+													<h:outputText value="#{premiacoes.valorPremioFormatado}"/>
+												</p:column>
+											</p:dataTable>
+										</div>
+									</div>
+								</p:outputPanel>
+							</p:dialog>
+							<p:dialog widgetVar="dialogBuscarResultConc" header="Buscar Resultado por Concurso" modal="true" showEffect="fade" hideEffect="fade" draggable="false" resizable="false" width="400" height="300">
 								<div class="formWrapConsulta">
 									<div class="formItemConsulta">
-										<p style="font-family: Josefin Sans, sans-serif; font-weight: bold;" id="valorArrecadado"/>
-										<script>
-											document.getElementById("valorArrecadado").innerText = 'Arrecadação: ' + formatarValorMonetario(#{loteriaBean.resultadoSelecionado.valorArrecadado});
-										</script>
+										<p style="font-family: Josefin Sans, sans-serif;">Selecione a loteria</p>
+										<p:selectOneMenu value="#{loteriaBean.loteria}" id="slcLoterias" widgetVar="slcLoterias">
+											<f:selectItem itemValue="" itemLabel="Selecione.."/>
+											<f:selectItems value="#{loteriaBean.listaLoterias}"
+												var="loteria" itemValue="#{loteria.nomeOriginal}" itemLabel="#{loteria.nomeAlterado}"/>/>
+										</p:selectOneMenu>
 									</div>
 									<div class="formItemConsulta">
-										<p style="font-family: Josefin Sans, sans-serif; font-weight: bold;" id="valorAcumProxConc"/>
-										<script>
-											document.getElementById("valorAcumProxConc").innerText = 'Acumulado: ' + formatarValorMonetario(#{loteriaBean.resultadoSelecionado.valorAcumuladoProximoConcurso});
-										</script>
-									</div>
-									<div class="formItemConsulta">
-										<p:dataTable var="premiacoes" value="#{loteriaBean.resultadoSelecionado.premiacoes}">
-											<p:column headerText="Faixas" style="font-family: Josefin Sans, sans-serif; text-align: center;">
-												<h:outputText value="#{premiacoes.descricao}"/>
-											</p:column>
-											<p:column headerText="Ganhadores" style="font-family: Josefin Sans, sans-serif; text-align: center;">
-												<h:outputText value="#{premiacoes.ganhadores}"/>
-											</p:column>
-											<p:column headerText="Prêmio (R$)" style="font-family: Josefin Sans, sans-serif; text-align: center;">
-												<h:outputText value="#{premiacoes.valorPremioFormatado}"/>
-											</p:column>
-										</p:dataTable>
+										<p style="font-family: Josefin Sans, sans-serif;">Informe o Número do Concurso</p>
+										<p:inputText value="#{loteriaBean.concurso}" id="txtConcurso"/>
 									</div>
 								</div>
-							</p:outputPanel>
-						</p:dialog>
+								<br/>
+								<div class="formWrapConsulta">
+									<div class="div-button-back">
+										<p:commandButton value="Buscar" styleClass="rounded-button buttons-back" id="btnBuscar" icon="pi pi-check-circle"
+											update="frmResultadosLoterias:panelResultConc" onclick="return validarDadosBuscarResultConc()"
+											action="#{loteriaBean.buscarResultadosLoteriaPorConcurso}"/>
+									</div>
+								</div>
+							</p:dialog>
+							<p:dialog widgetVar="dialogDetailsResultConc" header="Detalhes do Concurso" modal="true" showEffect="fade" hideEffect="fade" draggable="false" resizable="false" width="550" height="450">
+								<p:outputPanel id="panelResultConc">
+									<div class="formWrapConsulta">
+										<div class="formItemConsulta">
+											<p style="font-family: Josefin Sans, sans-serif; font-weight: bold;">
+												Local do sorteio: #{loteriaBean.resultadoConcurso.local}
+											</p>
+										</div>
+										<div class="formItemConsulta">
+											<p style="font-family: Josefin Sans, sans-serif; font-weight: bold;">
+												Números: #{loteriaBean.resultadoConcurso.dezenas}
+											</p>
+										</div>
+										<div class="formItemConsulta">
+											<p style="font-family: Josefin Sans, sans-serif; font-weight: bold;">
+												Data do sorteio: #{loteriaBean.resultadoConcurso.data}
+											</p>
+										</div>
+										<div class="formItemConsulta">
+											<p style="font-family: Josefin Sans, sans-serif; font-weight: bold;" id="valorArrec"/>
+											<script>
+												document.getElementById("valorArrec").innerText = 'Arrecadação: ' + formatarValorMonetario(#{loteriaBean.resultadoConcurso.valorArrecadado});
+											</script>
+										</div>
+										<div class="formItemConsulta">
+											<p style="font-family: Josefin Sans, sans-serif; font-weight: bold;" id="valorAcumProxConcurso"/>
+											<script>
+												document.getElementById("valorAcumProxConcurso").innerText = 'Acumulado: ' + formatarValorMonetario(#{loteriaBean.resultadoConcurso.valorAcumuladoProximoConcurso});
+											</script>
+										</div>
+										<div class="formItemConsulta">
+											<p style="font-family: Josefin Sans, sans-serif; font-weight: bold;">
+												#{loteriaBean.resultadoConcurso.strAcumulou}
+											</p>
+										</div>
+										<div class="formItemConsulta">
+											<p:dataTable var="premiacoes" value="#{loteriaBean.resultadoConcurso.premiacoes}">
+												<p:column headerText="Faixas" style="font-family: Josefin Sans, sans-serif; text-align: center;">
+													<h:outputText value="#{premiacoes.descricao}"/>
+												</p:column>
+												<p:column headerText="Ganhadores" style="font-family: Josefin Sans, sans-serif; text-align: center;">
+													<h:outputText value="#{premiacoes.ganhadores}"/>
+												</p:column>
+												<p:column headerText="Prêmio (R$)" style="font-family: Josefin Sans, sans-serif; text-align: center;">
+													<h:outputText value="#{premiacoes.valorPremioFormatado}"/>
+												</p:column>
+											</p:dataTable>
+										</div>
+									</div>
+								</p:outputPanel>
+							</p:dialog>
 						</div>
 					</div>
 				</h:form>

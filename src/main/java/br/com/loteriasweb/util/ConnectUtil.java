@@ -89,6 +89,13 @@ public class ConnectUtil implements Serializable {
 		
 	}
 	
+	/**
+	 * Método responsável por ignorar a validação de certificados.
+	 * Utilizar somente em ambientes de testes e de desenvolvimento.
+	 * 
+	 * @return um objeto {@link TrustManager} que aceita todos os certificados
+	 * 
+	 */
 	private static TrustManager[] getTrustAllCerts() {
 		
 		return new TrustManager[] {
@@ -126,7 +133,7 @@ public class ConnectUtil implements Serializable {
                 			
                 		}
                 		
-                	} catch(Exception e) {
+                	} catch (Exception e) {
                 		
                 		throw new IllegalArgumentException(e.getMessage(), e.getCause());
                 		
