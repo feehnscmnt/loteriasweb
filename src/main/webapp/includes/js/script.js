@@ -20,7 +20,21 @@ function responseAlert(icon, title, message) {
 	Swal.fire({
 		icon: icon,
 		title: title,
-		text: message
+		text: message,
+		showClass: {
+			popup: `
+				animate__animated
+			    animate__fadeInUp
+			    animate__faster
+			`
+		},
+		hideClass: {
+			popup: `
+			    animate__animated
+			    animate__fadeOutDown
+			    animate__faster
+			`
+		}
 	});
 }
 

@@ -10,7 +10,6 @@ import java.io.Serializable;
 import java.util.Properties;
 import java.net.URLEncoder;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Objects;
 
 /**
@@ -35,7 +34,7 @@ public class Util implements Serializable {
 		
 		var properties = new Properties();
 		
-		try (InputStream inStream = FacesContext.getCurrentInstance()
+		try (var inStream = FacesContext.getCurrentInstance()
 				.getExternalContext().getResourceAsStream("/WEB-INF/configs/props.properties")) {
 			
 			properties.load(inStream);

@@ -23,7 +23,7 @@ public class LoteriasListener implements ServletRequestListener, Serializable {
 	@Override
     public void requestInitialized(ServletRequestEvent sre) {
 		
-		HttpServletRequest httpServletRequest = (HttpServletRequest) sre.getServletRequest();
+		var httpServletRequest = (HttpServletRequest) sre.getServletRequest();
 		httpServletRequest.setAttribute("horaInicio", System.currentTimeMillis());
 		
 	}
@@ -34,7 +34,7 @@ public class LoteriasListener implements ServletRequestListener, Serializable {
 	@Override
     public void requestDestroyed(ServletRequestEvent sre) {
 		
-		HttpServletRequest httpServletRequest = (HttpServletRequest) sre.getServletRequest();
+		var httpServletRequest = (HttpServletRequest) sre.getServletRequest();
 		httpServletRequest.removeAttribute("horaInicio");
 		
 	}

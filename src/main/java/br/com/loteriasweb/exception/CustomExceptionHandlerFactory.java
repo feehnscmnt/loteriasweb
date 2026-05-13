@@ -2,7 +2,6 @@ package br.com.loteriasweb.exception;
 
 import jakarta.faces.context.ExceptionHandlerFactory;
 import jakarta.faces.context.ExceptionHandler;
-import java.io.Serializable;
 
 /**
  * Classe factory responsável por criar a instância da classe que fará o tratamento das exceções.
@@ -11,9 +10,7 @@ import java.io.Serializable;
  *
  */
 
-public class CustomExceptionHandlerFactory extends ExceptionHandlerFactory implements Serializable {
-	private static final long serialVersionUID = 6400506216470093900L;
-	private transient ExceptionHandlerFactory exceptionHandlerFactory;
+public class CustomExceptionHandlerFactory extends ExceptionHandlerFactory {
 	
 	/**
 	 * Construtor da classe parametrizado.
@@ -21,9 +18,8 @@ public class CustomExceptionHandlerFactory extends ExceptionHandlerFactory imple
 	 * @param exceptionHandlerFactory - {@link ExceptionHandlerFactory} - gerenciador de exceções
 	 * 
 	 */
-	@SuppressWarnings("deprecation")
 	public CustomExceptionHandlerFactory(ExceptionHandlerFactory exceptionHandlerFactory) {
-		this.exceptionHandlerFactory = exceptionHandlerFactory;
+		super(exceptionHandlerFactory);
 	}
 	
 	/**
@@ -31,7 +27,7 @@ public class CustomExceptionHandlerFactory extends ExceptionHandlerFactory imple
 	 */
 	@Override
 	public ExceptionHandler getExceptionHandler() {
-		return new CustomExceptionHandler(exceptionHandlerFactory.getExceptionHandler());
+		return new CustomExceptionHandler(getWrapped().getExceptionHandler());
 	}
 	
 }

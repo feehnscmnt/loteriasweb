@@ -11,7 +11,6 @@ import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.Comparator;
 import com.google.gson.Gson;
-import java.util.Properties;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,7 +45,7 @@ public class ConsultarLoteriaService implements Serializable {
 	 */
 	@PostConstruct
 	public void init() {
-		Properties properties = util.getProperties();
+		var properties = util.getProperties();
 		headerValueAccept = properties.getProperty("HEADER_VALUE_ACCEPT");
 		headerKeyAccept = properties.getProperty("HEADER_KEY_ACCEPT");
 		urlApi = properties.getProperty("URL_LOTERIASCAIXA_API");

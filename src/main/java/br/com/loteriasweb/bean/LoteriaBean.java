@@ -58,11 +58,11 @@ public class LoteriaBean implements Serializable {
 			
 		});
 		
-		listaLoterias.forEach(loteria -> {
+		listaLoterias.forEach(lot -> {
 			
-			if (!Objects.equals(loteria.getNomeOriginal(), arrayLoterias[2])) {
+			if (!Objects.equals(lot.getNomeOriginal(), arrayLoterias[2])) {
 				
-				var resultados = consLoterService.buscarResultadoRecentePorLoteria(loteria.getNomeOriginal());
+				var resultados = consLoterService.buscarResultadoRecentePorLoteria(lot.getNomeOriginal());
 				
 				listaResultados.addAll(resultados);
 				
@@ -83,31 +83,31 @@ public class LoteriaBean implements Serializable {
 		
 		listaResultConc = consLoterService.buscarResultadosLoteriaPorConcurso(loteria, concurso);
 		
-		listaResultConc.forEach(loteria -> {
+		listaResultConc.forEach(lot -> {
 			
-			resultadoConcurso.setLoteria(loteria.getLoteria());
-			resultadoConcurso.setConcurso(loteria.getConcurso());
-			resultadoConcurso.setData(loteria.getData());
-			resultadoConcurso.setLocal(util.capitalizeString(loteria.getLocal()));
-			resultadoConcurso.setDezenasOrdemSorteio(loteria.getDezenasOrdemSorteio());
-			resultadoConcurso.setDezenas(loteria.getDezenas());
-			resultadoConcurso.setTrevos(loteria.getTrevos());
-			resultadoConcurso.setTimeCoracao(loteria.getTimeCoracao());
-			resultadoConcurso.setMesSorte(loteria.getMesSorte());
-			resultadoConcurso.setPremiacoes(loteria.getPremiacoes());
-			resultadoConcurso.setEstadosPremiados(loteria.getEstadosPremiados());
-			resultadoConcurso.setObservacao(loteria.getObservacao());
-			resultadoConcurso.setAcumulou(loteria.getAcumulou());
-			resultadoConcurso.setStrAcumulou(util.capitalizeString(loteria.getStrAcumulou()));
-			resultadoConcurso.setProximoConcurso(loteria.getProximoConcurso());
-			resultadoConcurso.setDataProximoConcurso(loteria.getDataProximoConcurso());
-			resultadoConcurso.setLocalGanhadores(loteria.getLocalGanhadores());
-			resultadoConcurso.setValorArrecadado(loteria.getValorArrecadado());
-			resultadoConcurso.setValorAcumuladoConcurso05(loteria.getValorAcumuladoConcurso05());
-			resultadoConcurso.setValorAcumuladoConcursoEspecial(loteria.getValorAcumuladoConcursoEspecial());
-			resultadoConcurso.setValorAcumuladoProximoConcurso(loteria.getValorAcumuladoProximoConcurso());
-			resultadoConcurso.setValorEstimadoProximoConcurso(loteria.getValorEstimadoProximoConcurso());
-			resultadoConcurso.setBackcolorLoterias(loteria.getBackcolorLoterias());
+			resultadoConcurso.setLoteria(lot.getLoteria());
+			resultadoConcurso.setConcurso(lot.getConcurso());
+			resultadoConcurso.setData(lot.getData());
+			resultadoConcurso.setLocal(util.capitalizeString(lot.getLocal()));
+			resultadoConcurso.setDezenasOrdemSorteio(lot.getDezenasOrdemSorteio());
+			resultadoConcurso.setDezenas(lot.getDezenas());
+			resultadoConcurso.setTrevos(lot.getTrevos());
+			resultadoConcurso.setTimeCoracao(lot.getTimeCoracao());
+			resultadoConcurso.setMesSorte(lot.getMesSorte());
+			resultadoConcurso.setPremiacoes(lot.getPremiacoes());
+			resultadoConcurso.setEstadosPremiados(lot.getEstadosPremiados());
+			resultadoConcurso.setObservacao(lot.getObservacao());
+			resultadoConcurso.setAcumulou(lot.getAcumulou());
+			resultadoConcurso.setStrAcumulou(util.capitalizeString(lot.getStrAcumulou()));
+			resultadoConcurso.setProximoConcurso(lot.getProximoConcurso());
+			resultadoConcurso.setDataProximoConcurso(lot.getDataProximoConcurso());
+			resultadoConcurso.setLocalGanhadores(lot.getLocalGanhadores());
+			resultadoConcurso.setValorArrecadado(lot.getValorArrecadado());
+			resultadoConcurso.setValorAcumuladoConcurso05(lot.getValorAcumuladoConcurso05());
+			resultadoConcurso.setValorAcumuladoConcursoEspecial(lot.getValorAcumuladoConcursoEspecial());
+			resultadoConcurso.setValorAcumuladoProximoConcurso(lot.getValorAcumuladoProximoConcurso());
+			resultadoConcurso.setValorEstimadoProximoConcurso(lot.getValorEstimadoProximoConcurso());
+			resultadoConcurso.setBackcolorLoterias(lot.getBackcolorLoterias());
 			
 		});
 		
